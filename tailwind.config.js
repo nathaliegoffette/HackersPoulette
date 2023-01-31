@@ -5,8 +5,10 @@ module.exports = {
     extend:  { fontFamily:
       {
       'Lexend': ['Lexend', 'sans-serif'],
+      'Quantico': ['Quantico', 'sans-serif'],
       } 
     },
+              
   },
   plugins: [],
 }

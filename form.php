@@ -27,14 +27,14 @@ $arraySave = array();
     <link rel="stylesheet" href="output.css" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend&family=Quantico:ital,wght@1,700&display=swap" rel="stylesheet"> 
     <title>Contact Form</title>
 
 </head>
 
 <body class="flex flex-col bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... text-white font-Lexend ml-7 ">
 
-    <header class="flex flex-col justify-around pt-5 font-Lexend pb-3">
+    <header class="flex flex-col justify-around pt-5 font-Quantico pb-3">
         <form action="index.php">
         <button class="text-7xl mb-6">Hacker's Poulette</button>
 
@@ -117,7 +117,7 @@ $arraySave = array();
         <p>
             <label for="comment">* Comment </label>
             <br>
-            <input class="bg-white rounded-lg mt-3 ml-3 mb-3 pl-3 max-w-full w-80 text-gray-700 drop-shadow-xl valid:border-green-500" type="text" name="comment" placeholder="Leave a comment" value="<?php echo isset($_POST["comment"]) ? $_POST["comment"] : ''; ?>" id="comment" required><br>
+            <input class="bg-white rounded-lg mt-3 ml-10 mb-3 pl-3 max-w-full w-80 text-gray-700 drop-shadow-xl valid:border-green-500" type="text" name="comment" placeholder="Leave a comment" value="<?php echo isset($_POST["comment"]) ? $_POST["comment"] : ''; ?>" id="comment" required><br>
             
             <?php
             if (isset($_POST['comment'])) {
@@ -142,7 +142,7 @@ $arraySave = array();
 
     </form>
   <!--  <script src="https://www.google.com/recaptcha/api.js" async defer></script>-->
-    <i class="m-5">* the fields are required</i>
+    <i class="ml-0 m-5">* the fields are required</i>
     <br>
     <?php
 
