@@ -1,0 +1,173 @@
+
+<?php
+session_start();
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" href="output.css" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+    <title>Contact Form</title>
+
+</head>
+
+<body class="flex flex-col bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... text-white font-Lexend ml-7 ">
+
+    <header class="flex flex-col justify-around pt-5 font-Lexend pb-3">
+        <form action="index.php">
+        <button class="text-2xl mb-6">Hacker's Poulette</button>
+
+        </form>
+<?php
+//Beginning of the Form
+?>
+        </div>
+    </div>
+
+
+
+    <form method="POST" action="" class="leading-8 ml-2 pb-4">
+        <p>
+            <label class="w-48 " for="firstname">* Firstname </label>
+            <input class="bg-white rounded-lg ml-4 mb-3 pl-3 max-w-full text-gray-700 valid:border-green-500" type="text" name="firstname" placeholder="Firstname"   id='firstname' required><br>
+        </p>
+
+        <p>
+            <label for="name">* Name </label>
+            <input class="bg-white rounded-lg ml-12 mb-3 pl-3 max-w-full text-gray-700 valid:border-green-500" type="text" name="name" placeholder="Name" id="name" required><br>
+        </p>
+
+        <p>
+            <label for="email">* E-mail </label>
+            <input class="bg-white rounded-lg ml-11 mb-3 pl-3 max-w-full text-gray-700 valid:border-green-500" type="text" name="email" placeholder="E-mail" id="email" required><br>
+        </p>
+
+        <p>
+            <label for="comment">* Comment (250 characters minimum please)</label>
+            <br>
+            <input class="bg-white rounded-lg mt-3 ml-3 mb-3 pl-3 max-w-full w-80 text-gray-700 valid:border-green-500" type="text" name="comment" placeholder="Leave a comment"  id="comment" required><br>
+        </p>
+    <!--   <div class="g-recaptcha" data-sitekey="your-site-key"></div> -->
+        <input class="ml-3 mt-5 rounded-lg bg-gray-900 hover:bg-purple-900 active:bg-blue-900 pl-4 pr-4" type="submit" name="submit" value="Submit">
+       
+
+    </form>
+  <!--  <script src="https://www.google.com/recaptcha/api.js" async defer></script>-->
+    <i class="m-5">* the fields are required</i>
+    <br>
+    <?php
+
+    if (isset($_POST['submit'])) {
+        $name = $_POST['name'];
+        $firstname = $_POST['firstname'];
+        $email = $_POST['email'];
+        $comment = $_POST['comment'];
+      
+        $valid = true;
+      
+        if (!preg_match('/^[a-zA-ZÀ-ÿ|\s]{2,255}$/u', $name)) {
+          echo "<p>Le nom contient des caractères non valides</p>";
+          $valid = false;
+        } 
+        if (!preg_match('/^[a-zA-Z]{2,255}$/', $firstname)) {
+          echo "<p>Le prénom contient des caractères invalides</p>";
+          $valid = false;
+        }
+        if (!preg_match('/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/', $email)) {
+          echo "<p>L'adresse email n'est pas correcte</p>";
+          $valid = false;
+        }
+        if (!preg_match('/^[A-Za-z0-9\s\.\?,!]{250,1000}$/
+        ', $comment)) {
+          echo "<p>Le commentaire doit etre compris entre 250 et 1000 caractères, merci !</p>";
+          $valid = false;
+        }
+      
+        if ($valid) {
+          $name = filter_var($name, FILTER_SANITIZE_STRING);
+          $firstname = filter_var($firstname, FILTER_SANITIZE_STRING);
+          $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+          $comment = filter_var($comment, FILTER_SANITIZE_STRING);
+        }
+      }
+    
+            //$response = $_POST["g-recaptcha-response"];
+            //$url = 'https://www.google.com/recaptcha/api/siteverify';
+            //$data = array(
+            //    'secret' => 'your-secret-key',
+            //    'response' => $response
+            //);
+            //$options = array(
+            //    'http' => array (
+            //        'method' => 'POST',
+            //        'content' => http_build_query($data)
+            //    )
+            //);
+            //$context  = stream_context_create($options);
+            //$verify = file_get_contents($url, false, $context);
+            //$captcha_success=json_decode($verify);
+
+            //if ($captcha_success->success==false) {
+            //// show an error message
+            //} else if ($captcha_success->success==true) {
+            //// process the form
+            //}
+
+        
+//      header('Location: thankyou.php');
+
+
+	
+try {
+    // Connect to the database
+    $bdd = new PDO('mysql:host=localhost;dbname=hakerspoulette;charset=utf8', 'nathaliegoffette', 'becode');
+} catch (Exception $e) {
+    // If an error occurs, display the error message
+    die('Error : ' . $e->getMessage());
+}
+
+// Retrieve the form data
+try {
+	
+// Insert the data into the database
+$query = "INSERT INTO contactForm (firstname, name, email, comment) VALUES (:firstname, :name, :email, :comment)";
+$stmt = $bdd->prepare($query);
+$stmt->bindValue(':firstname', $firstname, PDO::PARAM_STR);
+$stmt->bindValue(':name', $name, PDO::PARAM_STR);
+$stmt->bindValue(':email', $email, PDO::PARAM_STR);
+$stmt->bindValue(':comment', $comment, PDO::PARAM_STR);
+$stmt->execute();
+
+if(isset($_POST['name'])) {
+    
+//    header('Location: thankyou.php');
+    exit;
+}
+	//echo "Votre commentaire a bien été transmis";
+    //header('Location: thankyou.php');
+    
+} catch (exception $e) {
+
+	echo "échec";
+}
+
+exit;
+
+
+    ?>
+
+<footer>
+    <p>Proudly coded by <a href="https://github.com/nathaliegoffette">Nath</a> for <a href="https://becode.org/">Becode</a></p>
+</footer>
+  
+</body>
+
+
+</html>
+
