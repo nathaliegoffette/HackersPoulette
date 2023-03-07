@@ -13,3 +13,8 @@ You will find php files, and some files related to the utilisation of Tailwind f
 # How to use it ?
 
 To use the form, you will need a local server or a distant server and a sql database.
+
+
+
+
+Note : there is actually a problem on deploying with Vercel... working on it !
